@@ -1,11 +1,11 @@
-# BAXI 3523 AIRA — Lab Assessment 1 (From-Scratch Guide)
+# ROS turtle1 to turtle2
 
 > **Note:** Replace `bXXXXXXXXX` with your actual **lowercase** matric number everywhere below.
 
 ---
 
 ## 1. Create the New ROS Package & Folders
-*(If an old `nadiahhusna` folder already exists, delete it first with `rm -rf ~/catkin_ws/src/nadiahhusna`.)*
+*(If an old `nadiahhusna` folder already exists, remove it first using the command in Section 8.)*
 
 ```bash
 cd ~/catkin_ws/src
@@ -98,3 +98,61 @@ zip -r nadiahhusna.zip nadiahhusna bXXXXXXXXX.bag
 ```
 
 Your final `nadiahhusna.zip` will be inside `~/catkin_ws/src`, ready to submit.
+
+---
+
+## 8. Additional & Troubleshooting Commands
+
+### Remove a Folder / ROS Package
+```bash
+# Delete a custom package folder
+rm -rf ~/catkin_ws/src/your_pkg_name
+
+# Delete a single file (e.g., old bag or zip)
+rm ~/catkin_ws/src/old_file.bag
+
+# Always rebuild and source after removing or adding a package
+cd ~/catkin_ws
+catkin_make
+source devel/setup.bash
+```
+
+### Source Workspace (Run in Every New Terminal)
+```bash
+source ~/catkin_ws/devel/setup.bash
+```
+*(Or add it permanently to `~/.bashrc` so you never have to type it again:)*
+```bash
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+### File Navigation & Permissions
+```bash
+ls -la                  # List all files, sizes, and permissions in current folder
+pwd                     # Show exact current directory path
+mv old.py new.py        # Rename a file
+chmod +x script.py      # Make a Python script executable
+find ~ -name "*.bag"    # Search for any .bag file in your home directory
+```
+
+### ROS Inspection & Manual Testing
+```bash
+rospack find nadiahhusna    # Verify ROS can see your package
+rosnode list                # List all running nodes
+rostopic list               # List all active topics
+rostopic echo /turtle1/pose # Print live topic data
+```
+
+### Playing Back or Fixing a `.bag` File
+```bash
+# Play back your bag (run roscore & turtlesim_node first)
+rosbag play bXXXXXXXXX.bag
+
+# Play back at 2x speed
+rosbag play -r 2 bXXXXXXXXX.bag
+
+# Fix a bag stuck as .bag.active (if terminal closed without Ctrl+C)
+rosbag reindex bXXXXXXXXX.bag.active
+mv bXXXXXXXXX.bag.active bXXXXXXXXX.bag
+```
